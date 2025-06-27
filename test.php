@@ -34,4 +34,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => true]);
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = json_decode(file_get_contents('php://input'), true); // il manque le `true`
+
+    if (!isset($data['id'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'note non retrouvée']); // c'était json-encode (erreur de syntaxe)
+        exit;
+    }
+
+    $stmt = $dbh->prepare('DELETE FROM notes WHERE id = ?');
+    $stmt->execute([$data['id']]); // appel correct avec tableau
+
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] ==='PUT') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    if(!isset($data['id'])){
+        http_response_code(400);
+        echo json_encode(['error' => 'note non retrouvée']);
+        exit;
+    }
+
+    $stmt = $dbh -> prepare('UPDATE notes SET titre=?, contenu=? where id =?');
+    $stmt -> execute([$data['titre'], $data['contenu'], $data['id']]);
+
+    echo json_encode(['success' => true]);
+}
 ?>

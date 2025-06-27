@@ -12,6 +12,16 @@
             <input type="submit" value="Ajouter" id="ajoutBtn">
         </form>
 
+        <div id="modifModal" style="display: none;">
+            <form id="modifForm">
+                <h1>Modifier la note</h1>
+                <div style="display: flex; flex-direction:raw;">
+                    <div><input type="text" id="modifTitre"></div> 
+                     <div> <textarea id="modifContenu"></textarea></div>
+                    <div><input type="submit" value="Modifier" id="envoieModif"></div>
+                </div>
+            </form>
+        </div>
         <script src="test.js"></script>
     </body>
 </html>
